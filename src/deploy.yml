@@ -37,7 +37,7 @@ metadata:
 #    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 #    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "svc"
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - port: 80
   selector:
