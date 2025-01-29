@@ -4,6 +4,8 @@ pipeline {
      environment {
         SONARQUBE_URL = 'http://192.168.56.1:9000'
         SONAR_TOKEN = credentials('sonar-token')
+        DOCKER_IMAGE = "asid55/mara:latest"
+        DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
     }
 
 
@@ -54,5 +56,7 @@ pipeline {
                 )
             }
         }
+
+        
 }
 }
