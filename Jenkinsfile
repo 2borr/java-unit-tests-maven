@@ -1,9 +1,6 @@
 pipeline {
     agent any
     
-    environment{
-        dockerhubpwd = credentials('dockerhubpwd')
-    }
 
     tools {
         jdk 'JDK-11'       // Use JDK 11
