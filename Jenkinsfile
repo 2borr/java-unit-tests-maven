@@ -7,15 +7,11 @@ pipeline {
 
     tools {
         jdk 'JDK-11'       // Use JDK 11
-        maven 'Maven-3'    // Use Maven
+        maven 'maven'    // Use Maven
     }
 
     stages {
-        stage('Clone or Checkout Code') {
-            steps {
-              //  git url:"https://github.com/HandsOnDevOpsTraining/java-unit-tests-maven.git", branch:"main"
-            }
-        }
+       
 
        stage('Build') {
             steps {
