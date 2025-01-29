@@ -1,6 +1,11 @@
 pipeline {
     agent any
     
+     environment {
+        SONARQUBE_URL = 'http://192.168.56.1:9000'
+        SONAR_TOKEN = credentials('Secret text')
+    }
+
 
     tools {
         jdk 'JDK-11'       // Use JDK 11
@@ -23,6 +28,14 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+         stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONAR_TOKEN'
                 }
             }
         }
