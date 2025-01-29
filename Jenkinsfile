@@ -57,6 +57,45 @@ pipeline {
             }
         }
 
-        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t ${DOCKER_IMAGE} ."
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh "docker push ${DOCKER_IMAGE}"
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                sh "docker rmi ${DOCKER_IMAGE}"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Docker Image Successfully Built and Pushed!'
+        }
+        failure {
+            echo 'Build or Push Failed!'
+        }
 }
 }
