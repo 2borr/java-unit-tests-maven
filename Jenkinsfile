@@ -26,5 +26,20 @@ pipeline {
                 }
             }
         }
+
+        stage('Archive Artifacts') { // Separate stage for archiving
+            steps {
+                archiveArtifacts(
+                    artifacts: 'target/*.jar, build/libs/*.war', // Files to archive (comma-separated)
+                    allowEmptyArchive: true, // Optional: Allow archiving even if no files match
+                    // Optional: If you want to keep the build even if archiving fails
+                    // failOnError: false,
+                    // Optional: If you want to only archive successful builds
+                    // onlyIfSuccessful: true,
+                    // Optional: If you want to use a different archive root directory
+                    // archiveRoot: './'
+                )
+            }
+        }
 }
 }
